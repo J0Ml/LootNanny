@@ -6,7 +6,6 @@ from helpers import format_filename
 import utils.config_utils as CU
 from modules.combat import Loadout, CustomWeapon
 
-
 CONFIG_FILENAME = format_filename("config.json")
 
 STREAMER_LAYOUT_DEFAULT = {'layout': [
@@ -19,9 +18,8 @@ STREAMER_LAYOUT_DEFAULT = {'layout': [
         ['Total Return: {} PED', 'TOTAL_RETURN']
     ]], 'style': 'font-size: 12pt;'}
 
-
+# Configuration class
 class Config(object):
-
     # Version
     version = CU.ConfigValue(3)
 
@@ -62,6 +60,12 @@ class Config(object):
         self.initialized = True
 
     def load_config(self):
+        """
+        Load the configuration from a file and update the object attributes accordingly.
+
+        Returns:
+            None
+        """
         if not os.path.exists(CONFIG_FILENAME):
             return
 
@@ -70,7 +74,7 @@ class Config(object):
                 CONFIG = json.loads(f.read())
         except:
             config_contents = ""
-            print("Emtpy Config")
+            print("Empty Config")
             return
 
         if CONFIG.get("version", 1) < self.version.value:
@@ -89,14 +93,26 @@ class Config(object):
 
                 value = loadouts
             elif item == "selected_loadout":
+                if isinstance(value, list):
+                    value = Loadout(**dict(zip(Loadout.FIELDS, value)))
+                else:
+                    value = Loadout(**value)
+                    #changed so it works on linux ubuntu as well 
+            """elif item == "selected_loadout":
                 if isinstance(data, list):
                     value = Loadout(**dict(zip(Loadout.FIELDS, data)))
                 else:
-                    value = Loadout(**value)
+                    value = Loadout(**value)"""
 
             setattr(self, item, value)
 
     def dump(self) -> dict:
+        """
+        Returns a dictionary representation of the current object.
+
+        :return: A dictionary containing the attributes of the current object.
+        :rtype: dict
+        """
         p = {}
         for attr_name in dir(self):
             attr = getattr(self, attr_name)
@@ -108,14 +124,29 @@ class Config(object):
                 p[attr_name] = attr.value.dump() if attr.value else {}
 
             elif isinstance(attr, CU.ConfigValue):
-
                 p[attr_name] = attr.value
         return p
 
     def print(self):
+        
         print(json.dumps(self.dump(), sort_keys=True, indent=4))
 
     def save(self):
+        """
+        Saves the current configuration to a file.
+
+        This function checks if the instance has been initialized before saving the configuration. If the instance has not been initialized, the function returns without doing anything.
+
+        The function converts the configuration data to a JSON string using the `json.dumps` function with indentation of 2 and sorted keys. It then writes the JSON string to a file specified by the `CONFIG_FILENAME` constant.
+
+        If an error occurs during the saving process, an error message is printed to the console.
+
+        Parameters:
+            self: The instance of the class.
+
+        Returns:
+            None
+        """
         if not self.initialized:
             return
         try:
@@ -126,9 +157,20 @@ class Config(object):
             print("Error saving config!")
 
     def __setattr__(self, item, value):
+        """
+        Set the value of an attribute.
+
+        Args:
+            item (str): The name of the attribute.
+            value (Any): The value to set.
+
+        Returns:
+            None
+        """
         print("Setting", item, value)
         if not isinstance(getattr(self, item, None), CU.ConfigValue):
             return super().__setattr__(item, value)
         config_item: CU.ConfigValue = getattr(self, item)
         config_item._value = value
         self.save()
+

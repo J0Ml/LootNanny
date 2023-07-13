@@ -16,8 +16,8 @@ try:
     from utils.tables import *
     from modules.combat import CombatModule
     from views.configuration import ConfigTab
-    from chat import ChatReader
     from config import Config
+    from chat import ChatReader
     from version import VERSION
     from windows.streamer import StreamerWindow
     from views.twitch import TwitchTab
@@ -28,7 +28,6 @@ except Exception as e:
 
 MAIN_EVENT_LOOP_TICK = 0.1
 TICK_COUNTER = 0
-
 
 class LootNanny(QWidget):
 
@@ -103,10 +102,25 @@ class LootNanny(QWidget):
         self.initialize_from_config()
 
     def open_donation_window(self):
+        """
+        Opens a donation window by opening the specified URL in a web browser.
+
+        Parameters:
+            self (object): The instance of the class.
+
+        Returns:
+            None
+        """
         url = "https://www.paypal.com/donate?hosted_button_id=QN5CN9A52Q59E"
         webbrowser.open(url, new=0)
 
     def initialize_from_config(self):
+        """
+        Initializes the object based on the provided configuration.
+
+        Returns:
+            None
+        """
         if not self.config:
             return
 
@@ -115,9 +129,33 @@ class LootNanny(QWidget):
             self.theme_btn.setStyleSheet("background-color: #222222; color: white;")
 
     def save_config(self):
+        """
+        Saves the configuration.
+
+        This function saves the current configuration by calling the `save()` method of the `config` object.
+
+        Parameters:
+            self (object): The instance of the class.
+
+        Returns:
+            None: This function does not return anything.
+        """
         self.config.save()
 
     def on_toggle_streamer_ui(self):
+        """
+        Toggles the visibility of the streamer UI window.
+
+        If the streamer window is currently open, it will be closed. If it is closed, a new
+        streamer window will be created and displayed. The appearance of the streamer window
+        will depend on the current theme.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         if self.streamer_window:
             self.streamer_window.close()
             self.streamer_window = None
@@ -129,6 +167,17 @@ class LootNanny(QWidget):
                 self.set_stylesheet(self.streamer_window, "dark.qss")
 
     def on_toggle_logging(self):
+        """
+        Toggles logging on or off.
+
+        This function is called when the logging toggle button is pressed. It checks the current state of the logging module and performs the appropriate actions to toggle logging on or off.
+
+        Parameters:
+        - self: The instance of the class.
+
+        Returns:
+        - None
+        """
         if self.combat_module.is_logging:
             self.combat_module.is_logging = False
             self.combat_module.is_paused = False
@@ -151,6 +200,19 @@ class LootNanny(QWidget):
             self.logging_pause_btn.setStyleSheet("background-color: green")
 
     def on_pause_logging(self):
+        """
+        Toggles logging on and off.
+
+        This function checks if the combat module is currently paused. If it is paused, it resumes logging by setting the `is_paused` attribute to False. It also updates the styling of the `logging_pause_btn` button to have a green background color and changes the button text to "Pause Logging". Additionally, it saves the active run of the combat module.
+
+        If the combat module is not paused, this function pauses logging by setting the `is_paused` attribute to True. It updates the styling of the `logging_pause_btn` button to have a red background color and changes the button text to "Unpause Logging". It also saves the active run of the combat module.
+
+        Parameters:
+            self (object): The instance of the class calling the function.
+
+        Return:
+            None
+        """
         if self.combat_module.is_paused:
             self.combat_module.is_paused = False
             self.logging_pause_btn.setStyleSheet("background-color: green")
@@ -163,6 +225,21 @@ class LootNanny(QWidget):
             self.combat_module.save_active_run(force=True)
 
     def on_tick(self):
+        """
+        Executes the on_tick function.
+
+        This function is called on every tick of the program. It performs the following actions:
+        1. Increments the TICK_COUNTER global variable.
+        2. Resets the TICK_COUNTER to 0 if it is divisible by 5.
+        3. Calls the `delay_start_reader` method of the `chat_reader` object.
+        4. Retrieves all recent lines in the chat and stores them in the `all_lines_this_tick` list.
+        5. Processes the lines in the `all_lines_this_tick` list incrementally using the `tick` method of the `combat_module` object.
+        6. Resizes the `streamer_window` if it exists.
+
+        Raises:
+            Exception: If an error occurs during the execution of the function.
+
+        """
         global TICK_COUNTER
         try:
             TICK_COUNTER += 1
@@ -252,6 +329,23 @@ class LootNanny(QWidget):
         return generalTab
 
     def onRunsChanged(self):
+        """
+        Updates the selected runs in the GUI with the corresponding data from the UI.
+
+        This function is triggered when the selection of runs in the GUI changes. It retrieves
+        the indexes of the selected rows in the `runs` table view. If there are no selected rows,
+        the function returns early. Otherwise, it determines the changed row and its corresponding
+        index in the `combat_module.runs` list.
+
+        The function then retrieves the `notes` and `extra_spend` cells for the changed row from
+        the `runs` table view. It attempts to convert the text in the `extra_spend` cell to a
+        decimal value. If the conversion fails, the default value of 0.0 is used and the `extra_spend`
+        cell is set to "0.0". 
+
+        Finally, the function updates the `extra_spend` and `notes` attributes of the corresponding
+        run object in the `combat_module.runs` list. It sets the `should_redraw_runs` flag of the
+        `combat_module` to True and clears the selection in the `runs` table view.
+        """
         indexes = self.runs.selectionModel().selectedRows()
         if not indexes:
             return
@@ -269,6 +363,19 @@ class LootNanny(QWidget):
         self.clear_run_selection()
 
     def on_markup_changed(self):
+        """
+        Handle the event when the markup is changed.
+        
+        This function is triggered when the markup in the item table is changed. It performs the following steps:
+        
+        1. Get the selected rows from the item table.
+        2. If no rows are selected, return.
+        3. Get the index of the first selected row.
+        4. Get the name and markup cells of the selected row.
+        5. Add the markup for the item to the MarkupSingleton.
+        6. Update the loot table in the combat module.
+        7. Clear the selection in the loot item table.
+        """
         selected_rows = self.item_table.selectionModel().selectedRows()
         if not selected_rows:
             return
@@ -280,19 +387,50 @@ class LootNanny(QWidget):
         self.clear_loot_item_table_selection()
 
     def on_loot_item_selected(self):
+        """
+        A function that handles the event when a loot item is selected.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         indexes = self.item_table.selectionModel().selectedRows()
         if not indexes:
             return
         self.loot_item_to_change = [len(self.combat_module.runs) - 1 - i.row() for i in indexes][0]
 
     def clear_loot_item_table_selection(self):
+        """
+        Clears the selection in the loot item table.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         self.item_table.selectionModel().clearSelection()
 
     def clear_run_selection(self):
+        """
+        Clears the selection of runs in the runs table.
+        """
         self.runs.selectionModel().clearSelection()
         self.delete_run_button.hide()
 
     def onLootTableClicked(self):
+        """
+        Handles the click event on the loot table.
+        Retrieves the selected rows from the loot table and updates the delete run button accordingly.
+        
+        Parameters:
+            self (object): The instance of the class.
+        
+        Returns:
+            None
+        """
         self.delete_run_button.show()
 
         indexes = self.runs.selectionModel().selectedRows()
@@ -308,6 +446,11 @@ class LootNanny(QWidget):
         self.runs_rows_to_delete = [len(self.combat_module.runs) - 1 - i.row() for i in indexes]
 
     def delete_runs(self):
+        """
+        Deletes the selected runs from the combat module.
+
+        This function iterates over the runs in the combat module and removes the runs that are marked for deletion. The runs that are not marked for deletion are copied to a new list called `copy_runs`. The `runs_rows_to_delete` variable is then reset to an empty list. The delete button is disabled and hidden. The selection in the runs table is cleared. The `combat_module.runs` is updated to contain the runs in `copy_runs`. If the active run is not in `copy_runs`, it is set to `None`. The runs table is cleared and the runs table is updated. Finally, the runs are saved and the run selection is cleared.
+        """
         copy_runs = []
         for i, run in enumerate(self.combat_module.runs):
             if i in self.runs_rows_to_delete:
@@ -326,6 +469,11 @@ class LootNanny(QWidget):
         self.clear_run_selection()
 
     def analysisTabUI(self):
+        """
+        Generates the UI for the analysis tab.
+
+        :return: QWidget object representing the analysis tab UI.
+        """
         analysisTab = QWidget()
         layout = QVBoxLayout()
 
@@ -437,6 +585,16 @@ class LootNanny(QWidget):
         self.set_stylesheet(self, path)
 
     def set_stylesheet(self, target, path):
+        """
+        Sets the stylesheet for a given target widget.
+
+        Args:
+            target (QWidget): The target widget to apply the stylesheet to.
+            path (str): The path to the stylesheet file.
+
+        Returns:
+            None
+        """
         file = QFile(resource_path(path))
         file.open(QFile.ReadOnly | QFile.Text)
         stream = QTextStream(file)
@@ -447,14 +605,34 @@ class LootNanny(QWidget):
     def closeEvent(self, event):
         print("Close Event")
         self.combat_module.save_active_run(force=True)
+        """
+        Handle the close event triggered by the user.
+
+        Args:
+            event (QCloseEvent): The close event object.
+
+        Returns:
+            None
+        """
         if self.streamer_window:
             self.streamer_window.close()
         if self.twitch.twitch_bot:
             pass # Clean tidy up needed
         event.accept()
 
-
 def create_ui():
+    """
+    Creates and displays the user interface for the application.
+    
+    This function initializes the QApplication object and sets the style to 'Fusion'.
+    It then creates an instance of the LootNanny class and sets the stylesheet to "dark.qss".
+    The window is then displayed using the show() method.
+    
+    A QTimer object is created and connected to the on_tick() method of the window instance.
+    The timer is started with a timeout value of MAIN_EVENT_LOOP_TICK * 1000 milliseconds.
+    
+    Finally, the application's event loop is started using the exec() method.
+    """
     app = QApplication([])
     app.setStyle('Fusion')
 
@@ -464,10 +642,9 @@ def create_ui():
 
     timer = QtCore.QTimer()
     timer.timeout.connect(window.on_tick)
-    timer.start(MAIN_EVENT_LOOP_TICK * 1000)
+    timer.start(int(MAIN_EVENT_LOOP_TICK * 1000)) #timer.start((MAIN_EVENT_LOOP_TICK * 1000)) added int to make it work properly 
 
     app.exec()
-
 
 if __name__ == "__main__":
     create_ui()
