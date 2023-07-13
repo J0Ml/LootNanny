@@ -1,0 +1,886 @@
+{
+    "A.R.C. Improved First Aid Pack (L)": {
+        "decay": "0.01000",
+        "type": "FAP"
+    },
+    "California FAP mk IV Elite (C)": {
+        "decay": "0.06610",
+        "type": "FAP"
+    },
+    "Cheap A$$ FAP-1(L)": {
+        "decay": "0.01000",
+        "type": "FAP"
+    },
+    "Chikara Ashvin HR1 (L)": {
+        "decay": "0.00630",
+        "type": "FAP"
+    },
+    "Chikara Ashvin HR2 (L)": {
+        "decay": "0.01150",
+        "type": "FAP"
+    },
+    "Coover's Personal Nurse": {
+        "decay": "0.02500",
+        "type": "FAP"
+    },
+    "Divine Intervention Chip 1": {
+        "decay": "0.04500",
+        "type": "Mindforce"
+    },
+    "Eir Mk 1": {
+        "decay": "0.02600",
+        "type": "FAP"
+    },
+    "E-Laj V1 (L)": {
+        "decay": "0.0903",
+        "type": "FAP"
+    },
+    "EMT kit Ek-2600, Improved": {
+        "decay": "0.04200",
+        "type": "FAP"
+    },
+    "EMT kit Ek-2600, Modified": {
+        "decay": "0.04200",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-1000": {
+        "decay": "0.02000",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2000": {
+        "decay": "0.06000",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2300": {
+        "decay": "0.06000",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2350": {
+        "decay": "0.06000",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2350, Adjusted": {
+        "decay": "0.02400",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2350, Improved": {
+        "decay": "0.02400",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2350, Modified": {
+        "decay": "0.02400",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2500": {
+        "decay": "0.07000",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2500 Deluxe": {
+        "decay": "1.80000",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2550": {
+        "decay": "0.09000",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2580": {
+        "decay": "0.05500",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2600": {
+        "decay": "0.09000",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2600, Adjusted": {
+        "decay": "0.04200",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2700": {
+        "decay": "0.08600",
+        "type": "FAP"
+    },
+    "EMT Kit Ek-2900": {
+        "decay": "0.15000",
+        "type": "FAP"
+    },
+    "Fanoos Medical V1 (L)": {
+        "decay": "0.00050",
+        "type": "FAP"
+    },
+    "Fanoos Medical V2 (L)": {
+        "decay": "0.01393",
+        "type": "FAP"
+    },
+    "Fast Aid Pack, Adjusted, FEN Edition": {
+        "decay": "0.01500",
+        "type": "FAP"
+    },
+    "Fast Aid Pack, Adjusted, FEN Edition (L)": {
+        "decay": "0.01500",
+        "type": "FAP"
+    },
+    "Fast Aid Pack, Improved, FEN Edition": {
+        "decay": "0.02200",
+        "type": "FAP"
+    },
+    "Fast Aid Pack, Modified, FEN Edition": {
+        "decay": "0.01700",
+        "type": "FAP"
+    },
+    "Fast Aid Pack, Modified, FEN Edition (L)": {
+        "decay": "0.01700",
+        "type": "FAP"
+    },
+    "First Gen Resurrect Chip 8": {
+        "decay": "0.035520",
+        "type": "Mindforce"
+    },
+    "GYRO Combat FAP-2 (L)": {
+        "decay": "0.00750",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-6 (L)": {
+        "decay": "0.01500",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-10 (L)": {
+        "decay": "0.02002",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-14 (L)": {
+        "decay": "0.02879",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-18 (L)": {
+        "decay": "0.03382",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-22 (L)": {
+        "decay": "0.03885",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-22 Smuggler": {
+        "decay": "0.04010",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-26 (L)": {
+        "decay": "0.04389",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-30 (L)": {
+        "decay": "0.05019",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-35 (L)": {
+        "decay": "0.05524",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-40 (L)": {
+        "decay": "0.06029",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-45 (L)": {
+        "decay": "0.06410",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-55 (L)": {
+        "decay": "0.07170",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-60 (L)": {
+        "decay": "0.07550",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-60 Smuggler": {
+        "decay": "0.07298",
+        "type": "FAP"
+    },
+    "GYRO Combat FAP-65 (L)": {
+        "decay": "0.07929",
+        "type": "FAP"
+    },
+    "GYRO FAP-2 (L)": {
+        "decay": "0.00875",
+        "type": "FAP"
+    },
+    "GYRO FAP-2 Smuggler": {
+        "decay": "0.01750",
+        "type": "FAP"
+    },
+    "GYRO FAP-6 (L)": {
+        "decay": "0.01923",
+        "type": "FAP"
+    },
+    "GYRO FAP-10 (L)": {
+        "decay": "0.02625",
+        "type": "FAP"
+    },
+    "GYRO FAP-14 (L)": {
+        "decay": "0.03678",
+        "type": "FAP"
+    },
+    "GYRO FAP-14 Smuggler": {
+        "decay": "0.03941",
+        "type": "FAP"
+    },
+    "GYRO FAP-18 (L)": {
+        "decay": "0.04381",
+        "type": "FAP"
+    },
+    "GYRO FAP-22 (L)": {
+        "decay": "0.05084",
+        "type": "FAP"
+    },
+    "GYRO FAP-26 (L)": {
+        "decay": "0.05786",
+        "type": "FAP"
+    },
+    "GYRO FAP-30 (L)": {
+        "decay": "0.06488",
+        "type": "FAP"
+    },
+    "GYRO FAP-30 Smuggler": {
+        "decay": "0.06313",
+        "type": "FAP"
+    },
+    "GYRO FAP-35 (L)": {
+        "decay": "0.07191",
+        "type": "FAP"
+    },
+    "GYRO FAP-40 (L)": {
+        "decay": "0.07807",
+        "type": "FAP"
+    },
+    "GYRO FAP-45 (L)": {
+        "decay": "0.08422",
+        "type": "FAP"
+    },
+    "GYRO FAP-50 (L)": {
+        "decay": "0.08954",
+        "type": "FAP"
+    },
+    "GYRO FAP-50 Smuggler": {
+        "decay": "0.08339",
+        "type": "FAP"
+    },
+    "GYRO FAP-55 (L)": {
+        "decay": "0.09485",
+        "type": "FAP"
+    },
+    "GYRO FAP-60 (L)": {
+        "decay": "0.10014",
+        "type": "FAP"
+    },
+    "GYRO FAP-65 (L)": {
+        "decay": "0.10544",
+        "type": "FAP"
+    },
+    "GYRO FAP Improved": {
+        "decay": "0.02000",
+        "type": "FAP"
+    },
+    "GYRO FAP-TT (L)": {
+        "decay": "0.00903",
+        "type": "FAP"
+    },
+    "H.E.A.R.T. M1 (L)": {
+        "decay": "0.02500",
+        "type": "FAP"
+    },
+    "H.E.A.R.T. M7 (L)": {
+        "decay": "0.03750",
+        "type": "FAP"
+    },
+    "Hedoc M-450, Adjusted": {
+        "decay": "0.09212",
+        "type": "FAP"
+    },
+    "Hedoc M-450, Adjusted (L)": {
+        "decay": "0.09210",
+        "type": "FAP"
+    },
+    "Hedoc M-600": {
+        "decay": "0.13421",
+        "type": "FAP"
+    },
+    "Hedoc M-600 (L)": {
+        "decay": "0.13421",
+        "type": "FAP"
+    },
+    "Hedoc M-600, Adjusted": {
+        "decay": "0.11743",
+        "type": "FAP"
+    },
+    "Hedoc Mayhem": {
+        "decay": "0.05350",
+        "type": "FAP"
+    },
+    "Hedoc Mayhem Adjusted": {
+        "decay": "0.05000",
+        "type": "FAP"
+    },
+    "Hedoc Mayhem Augmented": {
+        "decay": "0.09000",
+        "type": "FAP"
+    },
+    "Hedoc Mayhem Improved": {
+        "decay": "0.08000",
+        "type": "FAP"
+    },
+    "Hedoc Mayhem Modified": {
+        "decay": "0.08000",
+        "type": "FAP"
+    },
+    "Hedoc Mayhem Perfected": {
+        "decay": "0.10000",
+        "type": "FAP"
+    },
+    "Hedoc SK-20": {
+        "decay": "0.03159",
+        "type": "FAP"
+    },
+    "Hedoc SK-20 (L)": {
+        "decay": "0.03159",
+        "type": "FAP"
+    },
+    "Hedoc SK-20, Adjusted": {
+        "decay": "0.02764",
+        "type": "FAP"
+    },
+    "Hedoc SK-20, Adjusted (L)": {
+        "decay": "0.02764",
+        "type": "FAP"
+    },
+    "Hedoc SK-20, Adjusted, SGA Edition": {
+        "decay": "0.03300",
+        "type": "FAP"
+    },
+    "Hedoc SK-50 (L)": {
+        "decay": "0.06355",
+        "type": "FAP"
+    },
+    "Hedoc SK-50, Adjusted": {
+        "decay": "0.05560",
+        "type": "FAP"
+    },
+    "Hedoc SK-50, Adjusted (L)": {
+        "decay": "0.05560",
+        "type": "FAP"
+    },
+    "Hedoc SK-50, Adjusted, SGA Edition": {
+        "decay": "0.05561",
+        "type": "FAP"
+    },
+    "Hedoc SK-80": {
+        "decay": "0.08421",
+        "type": "FAP"
+    },
+    "Hedoc SK-80 (L)": {
+        "decay": "0.08422",
+        "type": "FAP"
+    },
+    "Hedoc SK-80, Adjusted": {
+        "decay": "0.07368",
+        "type": "FAP"
+    },
+    "Hedoc SK-120 (L)": {
+        "decay": "0.09023",
+        "type": "FAP"
+    },
+    "Herb Box": {
+        "decay": "0.01305",
+        "type": "FAP"
+    },
+    "I0-Pulse Unit": {
+        "decay": "0.01487",
+        "type": "FAP"
+    },
+    "Imperium Fast Fap v1 (L)": {
+        "decay": "0.02200",
+        "type": "FAP"
+    },
+    "Imperium Fast Fap v2 (L)": {
+        "decay": "0.04400",
+        "type": "FAP"
+    },
+    "Imperium Fast Fap v3 (L)": {
+        "decay": "0.07000",
+        "type": "FAP"
+    },
+    "Imperium Reliable Fap v1 (L)": {
+        "decay": "0.01400",
+        "type": "FAP"
+    },
+    "Imperium Reliable Fap v3 (L)": {
+        "decay": "0.04200",
+        "type": "FAP"
+    },
+    "Imperium Trainee F.A.P. (L)": {
+        "decay": "0.02100",
+        "type": "FAP"
+    },
+    "Medkit (L)": {
+        "decay": "0.00500",
+        "type": "FAP"
+    },
+    "Neff's Stim Pack": {
+        "decay": "0.09500",
+        "type": "FAP"
+    },
+    "NEVERDIE FA Series 001 (L)": {
+        "decay": "0.09307",
+        "type": "FAP"
+    },
+    "NEVERDIE FA Series 002 (L)": {
+        "decay": "0.10331",
+        "type": "FAP"
+    },
+    "NEVERDIE HK Series 001 (L)": {
+        "decay": "0.00857",
+        "type": "FAP"
+    },
+    "NEVERDIE HK Series 002 (L)": {
+        "decay": "0.01237",
+        "type": "FAP"
+    },
+    "NEVERDIE HK Series 005 (L)": {
+        "decay": "0.02187",
+        "type": "FAP"
+    },
+    "NEVERDIE HK Series 006 (L)": {
+        "decay": "0.02569",
+        "type": "FAP"
+    },
+    "NEVERDIE HK Series 008 (L)": {
+        "decay": "0.03810",
+        "type": "FAP"
+    },
+    "NEVERDIE HK Series 009 (L)": {
+        "decay": "0.04530",
+        "type": "FAP"
+    },
+    "NEVERDIE HK Series 010 (L)": {
+        "decay": "0.05303",
+        "type": "FAP"
+    },
+    "NEVERDIE LS Series 001 (L)": {
+        "decay": "0.90000",
+        "type": "FAP"
+    },
+    "NEVERDIE LS Series 002 (L)": {
+        "decay": "1.00000",
+        "type": "FAP"
+    },
+    "NEVERDIE LS Series 003 (L)": {
+        "decay": "1.10000",
+        "type": "FAP"
+    },
+    "NEVERDIE LS Series 004 (L)": {
+        "decay": "1.20000",
+        "type": "FAP"
+    },
+    "NEVERDIE LS Series 005 (L)": {
+        "decay": "1.30000",
+        "type": "FAP"
+    },
+    "NEVERDIE XMAS F.A.P": {
+        "decay": "0.12000",
+        "type": "FAP"
+    },
+    "NI Herbbox New Settler Issue (L)": {
+        "decay": "0.00050",
+        "type": "FAP"
+    },
+    "O.S. F.A.P. M1 (L)": {
+        "decay": "0.10000",
+        "type": "FAP"
+    },
+    "O.S. F.A.P. M7 (L)": {
+        "decay": "0.14943",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-5": {
+        "decay": "0.01000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-10": {
+        "decay": "0.03000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-15": {
+        "decay": "0.03300",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-18": {
+        "decay": "0.04800",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-18, SGA Edition": {
+        "decay": "0.05169",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-28": {
+        "decay": "0.03500",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-35": {
+        "decay": "0.03800",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-50": {
+        "decay": "0.04000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-50, SGA Edition": {
+        "decay": "0.04000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-69": {
+        "decay": "0.05000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-69, SGA Edition": {
+        "decay": "0.04800",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-80": {
+        "decay": "0.06000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-83": {
+        "decay": "0.08800",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-90": {
+        "decay": "0.07000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid FAP-110": {
+        "decay": "0.08000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid Pack, Adjusted": {
+        "decay": "0.02000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid Pack, Improved": {
+        "decay": "0.02000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid Pack, Improved, SGA Edition": {
+        "decay": "0.02083",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid Pack, Modified": {
+        "decay": "0.01000",
+        "type": "FAP"
+    },
+    "Omegaton Fast Aid Pack, Modified, SGA Edition": {
+        "decay": "0.01000",
+        "type": "FAP"
+    },
+    "Ozpyn Factorial F.A.P CE (L)": {
+        "decay": "0.06625",
+        "type": "FAP"
+    },
+    "Ozpyn Factorial F.A.P DE (L)": {
+        "decay": "0.07100",
+        "type": "FAP"
+    },
+    "Punk Trauma Pack (L)": {
+        "decay": "0.00903",
+        "type": "FAP"
+    },
+    "Rakzum's Pouch (L)": {
+        "decay": "0.34000",
+        "type": "FAP"
+    },
+    "Refurbished H.E.A.R.T. Rank I": {
+        "decay": "0.02500",
+        "type": "FAP"
+    },
+    "Refurbished H.E.A.R.T. Rank II": {
+        "decay": "0.02350",
+        "type": "FAP"
+    },
+    "Refurbished H.E.A.R.T. Rank III": {
+        "decay": "0.02200",
+        "type": "FAP"
+    },
+    "Refurbished H.E.A.R.T. Rank IV": {
+        "decay": "0.02050",
+        "type": "FAP"
+    },
+    "Refurbished H.E.A.R.T. Rank V": {
+        "decay": "0.01900",
+        "type": "FAP"
+    },
+    "Refurbished H.E.A.R.T. Rank VI": {
+        "decay": "0.01750",
+        "type": "FAP"
+    },
+    "Refurbished H.E.A.R.T. Rank VII": {
+        "decay": "0.02150",
+        "type": "FAP"
+    },
+    "Regeneration Chip 1": {
+        "decay": "0.01782",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 1 (L)": {
+        "decay": "0.01696",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 2": {
+        "decay": "0.02668",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 2 (L)": {
+        "decay": "0.02535",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 3": {
+        "decay": "0.03550",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 3 (L)": {
+        "decay": "0.03369",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 4": {
+        "decay": "0.04230",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 4 (L)": {
+        "decay": "0.04015",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 5": {
+        "decay": "0.04886",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 5 (L)": {
+        "decay": "0.04637",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 6": {
+        "decay": "0.05550",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 6 (L)": {
+        "decay": "0.05268",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 7": {
+        "decay": "0.06199",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 7 (L)": {
+        "decay": "0.05850",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 8": {
+        "decay": "0.07000",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 10": {
+        "decay": "0.08668",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 10 (L)": {
+        "decay": "0.08234",
+        "type": "Mindforce"
+    },
+    "Regeneration Chip 11": {
+        "decay": "0.09474",
+        "type": "Mindforce"
+    },
+    "Regeneration Field Chip 1 (L)": {
+        "decay": "0.16641",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 1 (L)": {
+        "decay": "0.00940",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 2 (L)": {
+        "decay": "0.01053",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 3 (L)": {
+        "decay": "0.01630",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 4 (L)": {
+        "decay": "0.01450",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 8 (L)": {
+        "decay": "0.02080",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 10 (L)": {
+        "decay": "0.02400",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 11 (L)": {
+        "decay": "0.02580",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 12 (L)": {
+        "decay": "0.02740",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 13 (L)": {
+        "decay": "0.02920",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 14 (L)": {
+        "decay": "0.03082",
+        "type": "Mindforce"
+    },
+    "Restoration Chip 15 (L)": {
+        "decay": "0.03277",
+        "type": "Mindforce"
+    },
+    "Restoration Chip, Adjusted": {
+        "decay": "0.01209",
+        "type": "Mindforce"
+    },
+    "Restoration Chip, Improved": {
+        "decay": "0.01619",
+        "type": "Mindforce"
+    },
+    "Restoration Chip, Modified": {
+        "decay": "0.02680",
+        "type": "Mindforce"
+    },
+    "S.I. First Aid Pack": {
+        "decay": "0.05999",
+        "type": "FAP"
+    },
+    "S.I. H.E.A.R.T.": {
+        "decay": "0.00900",
+        "type": "FAP"
+    },
+    "Tibbi Medical V6 (L)": {
+        "decay": "0.05015",
+        "type": "FAP"
+    },
+    "Vivo Explorer (L)": {
+        "decay": "0.00050",
+        "type": "FAP"
+    },
+    "Vivo Oxy2000 (L) Adapted": {
+        "decay": "0.10336",
+        "type": "FAP"
+    },
+    "Vivo Oxy2500 (L) Adapted": {
+        "decay": "0.11713",
+        "type": "FAP"
+    },
+    "Vivo S10": {
+        "decay": "0.01350",
+        "type": "FAP"
+    },
+    "Vivo T1": {
+        "decay": "0.00903",
+        "type": "FAP"
+    },
+    "Vivo T1A (L)": {
+        "decay": "0.00903",
+        "type": "FAP"
+    },
+    "Vivo T5 (L)": {
+        "decay": "0.01607",
+        "type": "FAP"
+    },
+    "Vivo T5 (L) Adapted": {
+        "decay": "0.01406",
+        "type": "FAP"
+    },
+    "Vivo T5 Adapted": {
+        "decay": "0.01406",
+        "type": "FAP"
+    },
+    "Vivo T10": {
+        "decay": "0.02200",
+        "type": "FAP"
+    },
+    "Vivo T10 (L)": {
+        "decay": "0.02187",
+        "type": "FAP"
+    },
+    "Vivo T10 (L) Adapted": {
+        "decay": "0.01914",
+        "type": "FAP"
+    },
+    "Vivo T10, Improved": {
+        "decay": "0.01200",
+        "type": "FAP"
+    },
+    "Vivo T15": {
+        "decay": "0.04287",
+        "type": "FAP"
+    },
+    "Vivo T15 (L)": {
+        "decay": "0.04287",
+        "type": "FAP"
+    },
+    "Vivo T15 (L) Adapted": {
+        "decay": "0.03751",
+        "type": "FAP"
+    },
+    "Vivo T15 Adapted": {
+        "decay": "0.03751",
+        "type": "FAP"
+    },
+    "Vivo T20": {
+        "decay": "0.05001",
+        "type": "FAP"
+    },
+    "Vivo T20 (L)": {
+        "decay": "0.05001",
+        "type": "FAP"
+    },
+    "Vivo T20 (L) Adapted": {
+        "decay": "0.04375",
+        "type": "FAP"
+    },
+    "Vivo T20 Adapted": {
+        "decay": "0.04375",
+        "type": "FAP"
+    },
+    "Vivo UR125 (L)": {
+        "decay": "0.07001",
+        "type": "FAP"
+    },
+    "Vivo UR125 (L) Adapted": {
+        "decay": "0.06125",
+        "type": "FAP"
+    },
+    "Vivo UR150 (L)": {
+        "decay": "0.07429",
+        "type": "FAP"
+    },
+    "Vivo UR175 (L)": {
+        "decay": "0.09001",
+        "type": "FAP"
+    },
+    "Vivo UR175 (L) Adapted": {
+        "decay": "0.07875",
+        "type": "FAP"
+    },
+    "Vivo UR200 (L)": {
+        "decay": "0.09537",
+        "type": "FAP"
+    },
+    "Vivo UR225 (L)": {
+        "decay": "0.09500",
+        "type": "FAP"
+    },
+    "Vivo Zychion Pro (L)": {
+        "decay": "0.15875",
+        "type": "FAP"
+    }
+}
