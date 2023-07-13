@@ -116,6 +116,17 @@ class ConfigTab(QWidget):
             os.makedirs(os.path.expanduser(self.screenshot_directory))
 
     def refresh_custom_weapons(self):
+        """
+        Refreshes the list of custom weapons.
+
+        This function iterates over each custom weapon in the `custom_weapons` configuration value and updates the `ALL_WEAPONS` dictionary accordingly. For each custom weapon, a new entry is added to the dictionary with the key "!CUSTOM - {weapon_name}". The value of the entry is a dictionary containing the type of the weapon (which is set to "custom"), the decay value (converted to a `Decimal` object), and the ammo burn value.
+
+        Parameters:
+            self (object): The current instance of the class.
+
+        Returns:
+            None
+        """
         for custom_weapon in self.app.config.custom_weapons.value:
             custom_weapon = CustomWeapon(*custom_weapon)
             ALL_WEAPONS[f"!CUSTOM - {custom_weapon.weapon}"] = {
@@ -125,6 +136,14 @@ class ConfigTab(QWidget):
             }
 
     def weapon_table_selected(self):
+        """
+        This function is triggered when a weapon table item is selected.
+        It retrieves the selected rows from the weapon table and performs the following actions:
+        - If no rows are selected, it hides the delete weapon button, the select loadout button, 
+          and sets the selected index to None.
+        - If rows are selected, it shows the delete weapon button and the select loadout button,
+          sets the selected index to the last selected row, and enables the delete weapon button.
+        """
         indexes = self.weapons.selectionModel().selectedRows()
         if not indexes:
             self.delete_weapon_btn.hide()
@@ -138,16 +157,49 @@ class ConfigTab(QWidget):
         self.delete_weapon_btn.setEnabled(True)
 
     def select_loadout(self):
+        """
+        Selects a loadout from the available loadouts and updates the selected loadout in the app configuration.
+        
+        This function takes no parameters.
+        
+        There is no return value.
+        """
         self.app.config.selected_loadout = self.app.config.loadouts.value[self.selected_index]
         self.active_loadout.setText(self.app.config.selected_loadout.value.weapon)
         self.recalculateWeaponFields()
 
     def delete_loadout(self):
+        """
+        Delete the selected loadout from the configuration.
+
+        This function deletes the loadout at the selected index from the configuration. After deleting the loadout, 
+        the configuration is saved to persist the changes. Finally, the weapons are redrawn to update the display.
+
+        Parameters:
+            self (object): The instance of the class.
+        
+        Returns:
+            None
+        """
         del self.app.config.loadouts.value[self.selected_index]
         self.app.config.save()
         self.redraw_weapons()
 
     def loadout_to_data(self):
+        """
+        Converts the loadouts stored in the app configuration into a dictionary format.
+
+        Returns:
+            dict: A dictionary containing the loadout data with the following keys:
+                  - "Name" (list): The names of the loadout weapons.
+                  - "Amp" (list): The amplitudes of the loadout.
+                  - "Scope" (list): The scopes of the loadout.
+                  - "Sight 1" (list): The first sight of the loadout.
+                  - "Sight 2" (list): The second sight of the loadout.
+                  - "Damage" (list): The damage enhancements of the loadout.
+                  - "Accuracy" (list): The accuracy enhancements of the loadout.
+                  - "Economy" (list): The economy enhancements of the loadout.
+        """
         d = {"Name": [], "Amp": [], "Scope": [], "Sight 1": [],
                          "Sight 2": [], "Damage": [], "Accuracy": [], "Economy": []}
         for loadout in self.app.config.loadouts.value:
@@ -165,11 +217,31 @@ class ConfigTab(QWidget):
         return d
 
     def redraw_weapons(self):
+        """
+        Redraws the weapons in the GUI.
+
+        This function refreshes the custom weapons, clears the current weapons data, and loads the updated loadout data into the weapons.
+
+        Parameters:
+            self (object): The instance of the class.
+
+        Returns:
+            None
+        """
         self.refresh_custom_weapons()
         self.weapons.clear()
         self.weapons.setData(self.loadout_to_data())
 
     def add_new_weapon(self):
+        """
+        Initializes a new weapon and adds it to the game.
+
+        Parameters:
+            self (Game): The instance of the Game class.
+        
+        Returns:
+            None
+        """
         weapon_popout = WeaponPopOut(self)
         if self.app.config.theme == "light":
             self.set_stylesheet(weapon_popout, "light.qss")
@@ -178,6 +250,15 @@ class ConfigTab(QWidget):
         self.add_weapon_btn.setEnabled(False)
 
     def create_weapon(self):
+        """
+        Create a weapon by initializing a CreateWeaponPopOut object and configuring its stylesheet based on the current theme. Disable the create_weapon_btn button.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         create_weapon_popout = CreateWeaponPopOut(self)
         if self.app.config.theme == "light":
             self.set_stylesheet(create_weapon_popout, "light.qss")
@@ -186,23 +267,72 @@ class ConfigTab(QWidget):
         self.create_weapon_btn.setEnabled(False)
 
     def add_weapon_cancled(self):
+        """
+        Add a description of the `add_weapon_canceled` function.
+
+        This function enables the `add_weapon_btn` button.
+
+        Parameters:
+            self: The instance of the class.
+
+        Returns:
+            None
+        """
         self.add_weapon_btn.setEnabled(True)
 
     def create_weapon_canceled(self):
+        """
+        Creates a weapon that was canceled.
+
+        Parameters:
+            self (ClassName): An instance of the ClassName class.
+
+        Returns:
+            None
+        """
         self.create_weapon_btn.setEnabled(True)
 
     def on_added_weapon(self, *args):
+        """
+        Creates a new loadout based on the given arguments and adds it to the `loadouts` list in the `config` object. Then, saves the `config` object and redraws the weapons.
+        
+        Parameters:
+            *args: The arguments needed to create a new loadout. The order of the arguments must match the order of the fields in the `Loadout` class.
+        
+        Returns:
+            None
+        """
         new_loadout = Loadout(**dict(zip(Loadout.FIELDS, args)))
         self.app.config.loadouts.value.append(new_loadout)
         self.app.config.save()
         self.redraw_weapons()
 
     def on_created_weapon(self, weapon: str, decay: Decimal, ammo_burn: int):
+        """
+        Adds a new custom weapon to the app's configuration.
+
+        Args:
+            weapon (str): The name of the weapon.
+            decay (Decimal): The decay value of the weapon.
+            ammo_burn (int): The amount of ammo the weapon burns.
+
+        Returns:
+            None
+        """
         self.app.config.custom_weapons.value.append(CustomWeapon(weapon, decay, ammo_burn))
         self.app.config.save()
         self.redraw_weapons()
 
     def update_screenshot_fields(self):
+        """
+        Updates the screenshot-related fields in the application configuration.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         self.app.config.screenshot_threshold = int(self.screenshot_threshold.text())
         self.app.config.screenshot_delay = int(self.screenshots_delay.text())
         self.app.config.screenshot_directory = self.screenshots_directory_text.text()
@@ -212,6 +342,25 @@ class ConfigTab(QWidget):
             os.makedirs(os.path.expanduser(self.app.config.screenshot_directory.value))
 
     def set_new_streamer_layout(self):
+        """
+        Set the new layout for the streamer.
+
+        This function sets the new layout for the streamer by updating the streamer_layout configuration parameter. 
+        The new layout is obtained by parsing the JSON string provided in the streamer_window_layout_text 
+        QTextEdit widget. 
+
+        Parameters:
+        - self: The current instance of the class.
+
+        Return:
+        - None
+
+        Exceptions:
+        - Any exception raised during the parsing of the JSON string will cause the streamer_window_layout_text 
+          QTextEdit widget to be styled with red color.
+        - If the app.theme is "dark", the streamer_window_layout_text QTextEdit widget will be styled with white 
+          color. Otherwise, it will be styled with black color.
+        """
         try:
             self.app.config.streamer_layout = json.loads(self.streamer_window_layout_text.toPlainText())
             self.streamer_window_layout_text.setStyleSheet("color: white;" if self.app.theme == "dark" else "color: black;")
@@ -219,12 +368,27 @@ class ConfigTab(QWidget):
             self.streamer_window_layout_text.setStyleSheet("color: red;")
 
     def open_files(self):
+        """
+        Open files using a QFileDialog and set the location in the app config.
+
+        :param self: The object instance.
+        :return: None
+        """
         path = QFileDialog.getOpenFileName(self, 'Open a file', '', 'All Files (*.*)')
         self.app.config.location = path[0]
         self.chat_location_text.setText(path[0])
         self.onChatLocationChanged()
 
     def recalculateWeaponFields(self):
+        """
+        Recalculates the weapon fields based on the selected loadout.
+
+        Params:
+            None
+
+        Returns:
+            None
+        """
         loadout = self.app.config.selected_loadout.value
         if loadout.weapon is None:
             return
@@ -262,10 +426,40 @@ class ConfigTab(QWidget):
         self.app.combat_module.update_active_run_cost()
 
     def onNameChanged(self):
+        """
+        Updates the name in the app's configuration and saves the configuration.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
+        """
+        Updates the name in the app's configuration and saves the configuration.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         self.app.config.name = self.character_name.text()
         self.app.save_config()
 
     def onChatLocationChanged(self):
+        """
+        A function to handle changes in the chat location.
+
+        This function is triggered when the chat location changes. It updates the location
+        in the application's configuration.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         if "*" in self.chat_location_text.text():
             print("Probably an error trying to resave this value, don't update")
             return
@@ -304,9 +498,26 @@ class WeaponPopOut(QWidget):
         self.show()
 
     def resize_to_contents(self):
+        """
+        Resizes the widget to fit its contents.
+
+        This method sets the size of the widget to the size recommended by its layout. It is useful when the widget's size depends on the size of its child widgets or the content it displays.
+
+        Parameters:
+            self (QWidget): The widget that will be resized.
+
+        Returns:
+            None
+        """
         self.setFixedSize(self.layout.sizeHint())
 
     def create_widgets(self):
+        """
+        Create and initialize the widgets for the GUI.
+
+        Returns:
+            None.
+        """
         layout = QVBoxLayout()
         self.setLayout(layout)
 
@@ -370,10 +581,34 @@ class WeaponPopOut(QWidget):
         return layout
 
     def cancel(self):
+        """
+        Cancels the current operation.
+
+        This function is responsible for canceling the current operation. It performs the following steps:
+        1. Calls the `add_weapon_canceled` method of the parent object to indicate that the weapon has been canceled.
+        2. Closes the current operation.
+
+        Parameters:
+            self: The instance of the class.
+
+        Returns:
+            None
+        """
         self.parent.add_weapon_cancled()
         self.close()
 
     def confirm(self):
+        """
+        Confirms the weapon selection and adds it to the parent object.
+
+        This method is called when the confirmation button is pressed. It checks if a weapon is selected. If no weapon is selected, it closes the weapon selection window. If a weapon is selected, it calls the `on_added_weapon` method of the parent object with the selected weapon and other related parameters.
+
+        Parameters:
+            None.
+
+        Returns:
+            None.
+        """
         if not self.weapon:
             self.close()
         self.parent.on_added_weapon(
@@ -389,6 +624,15 @@ class WeaponPopOut(QWidget):
         self.close()
 
     def on_field_changed(self):
+        """
+        Updates the attributes of the object based on the selected options in the GUI.
+
+        Parameters:
+            self (object): The instance of the class.
+        
+        Returns:
+            None
+        """
         self.scope = self.scope_option.currentText()
         self.sight_1 = self.sight_1_option.currentText()
         self.sight_2 = self.sight_2_option.currentText()
@@ -403,14 +647,41 @@ class WeaponPopOut(QWidget):
         self.economy_enhancers_txt.setText(str(self.economy_enhancers))
 
     def mousePressEvent(self, event):
+        """
+        A function that handles the mouse press event.
+
+        Args:
+            event (QMouseEvent): The mouse event object containing information about the event.
+
+        Returns:
+            None: This function does not return anything.
+        """
         self.oldPos = event.globalPos()
 
     def mouseMoveEvent(self, event):
+        """
+        Handles the mouse move event.
+
+        Args:
+            event (QMouseEvent): The mouse event object.
+
+        Returns:
+            None
+        """
         delta = QPoint (event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
 
     def closeEvent(self, event):
+        """
+        Close the event.
+
+        Args:
+            event: The event object.
+
+        Returns:
+            None
+        """
         event.accept()  # let the window close
 
 
@@ -436,9 +707,27 @@ class CreateWeaponPopOut(QWidget):
         self.show()
 
     def resize_to_contents(self):
+        """
+        Resizes the widget to fit its contents.
+
+        This method sets the fixed size of the widget based on the size hint of its layout. 
+        The widget will expand or shrink to accommodate the size of its contents.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         self.setFixedSize(self.layout.sizeHint())
 
     def create_widgets(self):
+        """
+        Creates and returns a layout containing a form for creating widgets.
+
+        Returns:
+            QVBoxLayout: The layout containing the form.
+        """
         layout = QVBoxLayout()
         self.setLayout(layout)
 
@@ -474,10 +763,32 @@ class CreateWeaponPopOut(QWidget):
         return layout
 
     def cancel(self):
+        """
+        Cancels the current operation.
+
+        This function is responsible for canceling the operation. It calls the `create_weapon_canceled` method of the `parent` object to notify it that the weapon creation process has been canceled. After that, it closes the current operation.
+
+        Parameters:
+            self (ClassName): The instance of the class that this method belongs to.
+
+        Returns:
+            None
+        """
         self.parent.create_weapon_canceled()
         self.close()
 
     def confirm(self):
+        """
+        Confirm the creation of a weapon.
+
+        This function notifies the parent object about the creation of a weapon by calling the `on_created_weapon` method. It passes the weapon's name, decay, and burn as parameters to the parent object.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         self.parent.on_created_weapon(
             self.name,
             self.weapon_decay,
@@ -486,17 +797,55 @@ class CreateWeaponPopOut(QWidget):
         self.close()
 
     def on_field_changed(self):
+        """
+        Update the attributes of the weapon based on the user input.
+
+        This function is called whenever a field is changed in the UI. It retrieves the values from the input fields and updates the corresponding attributes of the weapon. The updated attributes include the name, decay, and burn rate of the weapon.
+
+        Parameters:
+        - None
+
+        Return:
+        - None
+        """
         self.name = self.weapon_name_txt.text()
         self.weapon_decay = self.decay_txt.text()
         self.weapon_burn = int(self.ammo_burn_txt.text())
 
     def mousePressEvent(self, event):
+        """
+        Sets the position of the mouse when a mouse press event occurs.
+
+        Parameters:
+            event (QMouseEvent): The mouse press event.
+
+        Returns:
+            None
+        """
         self.oldPos = event.globalPos()
 
     def mouseMoveEvent(self, event):
+        """
+        Handles the mouse move event.
+
+        Args:
+            event (QMouseEvent): The mouse move event.
+
+        Returns:
+            None
+        """
         delta = QPoint (event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
 
     def closeEvent(self, event):
+        """
+        Handle the close event of the window and accept it to close the window.
+
+        Args:
+            event: The close event triggered by the user.
+
+        Returns:
+            None
+        """
         event.accept()  # let the window close

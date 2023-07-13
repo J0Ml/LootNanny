@@ -28,6 +28,15 @@ class BaseTableView(QTableWidget):
         self.setHorizontalHeaderLabels(horHeaders)
 
     def keyPressEvent(self, event):
+        """
+        Handles the key press event for the widget.
+
+        Parameters:
+            event (QKeyEvent): The key event object.
+
+        Returns:
+            None
+        """
         super().keyPressEvent(event)
         # If table cells are copied via CTRL+C, we should copy them to the clipboard
         # in a format that is readable via most spreadsheets ( tab deliniated )

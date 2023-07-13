@@ -36,6 +36,12 @@ class CraftingTab(QWidget):
         self.create_layout()
 
     def create_layout(self):
+        """
+        Creates the layout for the GUI.
+        
+        Returns:
+            None
+        """
         layout = QVBoxLayout()
 
         form_inputs = QFormLayout()
@@ -121,27 +127,81 @@ class CraftingTab(QWidget):
         self.setLayout(layout)
 
     def one_item_per_success_check_toggled(self):
+        """
+        Sets the value of the `one_item_per_success` attribute to the value of the `isChecked()` method of the `one_item_per_success_check` object. 
+        Calls the `calculate_crafting_totals()` method.
+        """
         self.one_item_per_success = self.one_item_per_success_check.isChecked()
         self.calculate_crafting_totals()
 
     def use_residue_toggled(self):
+        """
+        Toggles the use_residue attribute of the class instance.
+        
+        This function is called when the use_residue_check checkbox is toggled. It updates the value of the use_residue attribute by getting the checked state of the checkbox. After updating the attribute, it calls the calculate_crafting_totals() function to recalculate the crafting totals based on the new value of use_residue.
+        """
         self.use_residue = self.use_residue_check.isChecked()
         self.calculate_crafting_totals()
 
     def residue_markup_text_changed(self):
+        """
+        Updates the `residue_markup` attribute based on the value entered in the `residue_markup_text` field.
+
+        Parameters:
+            self (object): The instance of the class.
+        
+        Returns:
+            None
+        """
         self.residue_markup = Decimal(self.residue_markup_text.text().replace("%", "")) / 100
         self.calculate_crafting_totals()
 
     def item_max_tt_text_changed(self):
+        """
+        Update the value of `self.max_tt` based on the text entered in `self.item_max_tt`.
+        Recalculate the crafting totals after updating `self.max_tt`.
+        """
         self.max_tt = Decimal(self.item_max_tt.text())
         self.calculate_crafting_totals()
 
     def get_selected_item_name(self):
+        """
+        Returns the name of the selected item.
+        
+        This function checks if a blueprint is selected and if so, it returns the name of the blueprint without the " Blueprint" suffix. If the name contains a level indicator, it removes it as well.
+        
+        :return: The name of the selected item if a blueprint is selected, or None if no blueprint is selected.
+        :rtype: str or None
+        """
         if self.selected_blueprint:
             return self.selected_blueprint.replace(" Blueprint", "").rsplit(" (L)", 1)[0]
         return None
 
     def on_changed_item_markup(self):
+        """
+        Update the item markup when the selected item changes.
+
+        This function retrieves the name of the selected item using the 
+        `get_selected_item_name()` method. If no item is selected, the function 
+        returns without performing any further actions.
+
+        The function then calls the `add_markup_for_item()` method of the 
+        `MarkupSingleton` class to add the markup for the selected item, using the
+        `item_markup.text()` value as the markup. 
+
+        Next, the function updates the data in the `blueprint_table` by calling 
+        the `setData()` method with the formatted resources obtained from the 
+        current selection.
+
+        Finally, the function calls the `calculate_crafting_totals()` method to 
+        calculate the crafting totals.
+
+        Parameters:
+            self (object): The instance of the class.
+
+        Returns:
+            None
+        """
         item = self.get_selected_item_name()
         if not item:
             return
@@ -150,10 +210,43 @@ class CraftingTab(QWidget):
         self.calculate_crafting_totals()
 
     def on_changed_blueprint_markup(self):
+        """
+        Add a markup for the selected blueprint and calculate crafting totals.
+
+        This function adds a markup for the selected blueprint by calling the `add_markup_for_item` method of the `MarkupSingleton` class. It takes no parameters and does not return any value.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         MarkupSingleton.add_markup_for_item(self.selected_blueprint, self.blueprint_markup_text.text())
         self.calculate_crafting_totals()
 
     def add_crafting_run(self):
+        """
+        Adds a crafting run to the active combat run.
+
+        If there is no active combat run, the function returns without doing anything.
+
+        The function appends a note to the active combat run's notes, indicating the number of clicks and the selected blueprint.
+        The note is in the format "+(total_clicks) clicks of (selected_blueprint); ".
+
+        The function updates the total cost and extra spend of the active combat run.
+        The total cost is incremented by the total TT cost of the crafting run.
+        The extra spend is incremented by the difference between the total cost and the total TT cost.
+
+        After adding the crafting run, the function resets the selected blueprint, total clicks, and blueprint table.
+
+        Finally, the function sets a flag to redraw the runs in the combat module.
+
+        Parameters:
+        None
+
+        Returns:
+        None
+        """
         if not self.app.combat_module.active_run:
             return
         note = f"+({self.total_clicks}) clicks of {self.selected_blueprint}; "
@@ -166,6 +259,9 @@ class CraftingTab(QWidget):
         self.app.combat_module.should_redraw_runs = True
 
     def on_updated_total_clicks(self):
+        """
+        Updates the value of the 'total_clicks' attribute based on the text entered in the 'total_clicks_text' QLineEdit widget. If the text cannot be converted to an integer, the 'total_clicks' attribute is set to 1 and the 'total_clicks_text' widget is updated with the value '1'. After updating the 'total_clicks' attribute, the function calls the 'calculate_crafting_totals' method and updates the data in the 'blueprint_table' widget with the formatted resources obtained from the current selection.
+        """
         try:
             self.total_clicks = int(self.total_clicks_text.text())
         except:

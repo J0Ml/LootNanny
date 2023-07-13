@@ -35,6 +35,17 @@ class TwitchTab(QWidget):
         self.validate_settings()
 
     def to_config(self):
+        """
+        Converts the current object into a dictionary representation of a configuration.
+        
+        Returns:
+            dict: A dictionary representing the configuration with the following keys:
+                - "token" (str): The OAuth token.
+                - "username" (str): The username.
+                - "channel" (str): The channel.
+                - "prefix" (str): The command prefix.
+                - "commands_enabled" (List[str]): A list of enabled command values.
+        """
         return {
             "token": self.oauth_token,
             "username": self.username,
@@ -44,6 +55,12 @@ class TwitchTab(QWidget):
         }
 
     def create_layout(self):
+        """
+        Creates a layout for the widget.
+        
+        Returns:
+            QVBoxLayout: The layout for the widget.
+        """
         layout = QVBoxLayout()
 
         form_inputs = QFormLayout()
@@ -86,6 +103,15 @@ class TwitchTab(QWidget):
         self.setLayout(layout)
 
     def start_twitch_bot(self):
+        """
+        Starts the Twitch bot and disables the start button.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         self.start_btn.setEnabled(False)
         self.start_btn.setText("Restart App To Start Twitch Bot Again :( (Work in progress)")
         if self.twitch_bot is not None:
@@ -104,6 +130,18 @@ class TwitchTab(QWidget):
         self.twitch_bot_thread.start()
 
     def on_settings_changed(self):
+        """
+        Updates the Twitch settings based on the values entered in the UI.
+
+        This function retrieves the values entered in the UI for the Twitch token, username, channel, and command prefix. 
+        It then updates the corresponding attributes in the application's configuration.
+
+        Parameters:
+            self (object): The instance of the class.
+        
+        Returns:
+            None
+        """
         self.app.config.twitch_token = self.oauth_token_text.text()
         self.app.config.twitch_username = self.username_text.text()
         self.app.config.twitch_channel = self.channel_text.text()
@@ -113,6 +151,20 @@ class TwitchTab(QWidget):
         self.app.save_config()
 
     def validate_settings(self):
+        """
+        Validates the settings of the application.
+
+        This function checks if all the required settings for the application are
+        provided. The required settings include the Twitch token, Twitch username,
+        Twitch channel, and Twitch prefix. If all the required settings are provided,
+        the 'start_btn' is enabled. Otherwise, the 'start_btn' is disabled.
+
+        Parameters:
+            self (object): The current instance of the class.
+
+        Returns:
+            None
+        """
         if all([
             self.app.config.twitch_token.value,
             self.app.config.twitch_username.value,
@@ -124,6 +176,17 @@ class TwitchTab(QWidget):
             self.start_btn.setEnabled(False)
 
     def on_commands_toggled(self):
+        """
+        Toggles the commands based on the state of the checkboxes.
+
+        This function iterates through the dictionary `self.command_toggles` which contains the checkboxes for each command. For each command, it checks if the corresponding checkbox is checked. If it is, the command is added to the set `self.app.config.twitch_commands_enabled.value`. If the checkbox is not checked, the command is removed from the set. After iterating through all the commands, the function saves the updated configuration.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         for command, checkbox in self.command_toggles.items():
             checkbox: QComboBox
             if checkbox.isChecked():

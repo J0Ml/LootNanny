@@ -28,6 +28,12 @@ class JsonConfigValue(ConfigValue):
 
     @property
     def ui_value(self):
+        """
+        Returns the JSON representation of the value of the UI. 
+
+        :return: A string representing the JSON value of the UI.
+        :rtype: str
+        """
         return json.dumps(self.value, indent=2, sort_keys=True)
 
 
@@ -35,6 +41,9 @@ class ConfigSecret(ConfigValue):
 
     @property
     def ui_value(self):
+        """
+        Returns the UI value of the current object.
+        """
         return "".join(["*" if ch != "/" else "/" for ch in self.value])
 
 

@@ -49,10 +49,30 @@ class Loadout(object):
         self.economy_enh = economy_enh
 
     def __str__(self):
+        """
+        Return a string representation of the Loadout object.
+
+        Returns:
+            str: The string representation of the Loadout object.
+        """
         contents = ", ".join([f"{field}={repr(getattr(self, field))}" for field in self.FIELDS])
         return f"Loadout({contents})"
 
     def dump(self):
+        """
+        Returns a dictionary containing the attributes of the weapon object.
+
+        Returns:
+            dict: A dictionary containing the following attributes of the weapon object:
+                - weapon (str): The weapon type.
+                - amp (float): The amplification value.
+                - scope (str): The scope type.
+                - sight_1 (str): The first sight type.
+                - sight_2 (str): The second sight type.
+                - damage_enh (bool): Indicates if damage enhancement is enabled.
+                - accuracy_enh (bool): Indicates if accuracy enhancement is enabled.
+                - economy_enh (bool): Indicates if economy enhancement is enabled.
+        """
         return {
             "weapon": self.weapon,
             "amp": self.amp,
@@ -66,6 +86,14 @@ class Loadout(object):
 
     @classmethod
     def load(cls, raw):
+        """
+        Load a raw dictionary representation of the object and return an instance of the class.
+
+        :param raw: A dictionary containing the raw data.
+        :type raw: dict
+        :return: An instance of the class.
+        :rtype: cls
+        """
         return cls(**raw)
 
 
@@ -116,6 +144,12 @@ class HuntingTrip(object):
         self.total_misses = 0
 
     def serialize_run(self):
+        """
+        Serializes the run into a dictionary format.
+
+        Returns:
+            dict: The serialized run data.
+        """
         return {
             "start": dt_to_ts(self.time_start),
             "end": dt_to_ts(self.time_end) if self.time_end else None,
@@ -151,6 +185,17 @@ class HuntingTrip(object):
 
     @classmethod
     def from_seralized(cls, seralized, include_loot=False):
+        """
+        Create an instance of the class from a serialized dictionary.
+
+        Parameters:
+        - cls: The class object.
+        - seralized: The serialized dictionary containing the data for the instance.
+        - include_loot: Optional boolean indicating whether to include loot data.
+
+        Returns:
+        - inst: The instance of the class created from the serialized dictionary.
+        """
         inst = cls(ts_to_dt(seralized["start"]), Decimal(seralized["config"]["cps"]))
         inst.notes = seralized.get("notes", "")
 
@@ -197,41 +242,113 @@ class HuntingTrip(object):
 
     @classmethod
     def load_from_filename(cls, fn, include_loot=False):
+        """
+        Load an instance of the class from a file with the specified filename.
+
+        Args:
+            fn (str): The filename of the file to load from.
+            include_loot (bool, optional): Whether to include the loot in the loaded instance. Defaults to False.
+
+        Returns:
+            The loaded instance of the class.
+        """
         with open(format_filename(fn), 'r') as f:
             content = f.read()
         return cls.from_seralized(json.loads(content), include_loot=include_loot)
 
     @property
     def filename(self):
+        """
+        Return the filename for the LootNannyLog JSON file.
+
+        Returns:
+            str: The filename for the LootNannyLog JSON file.
+        """
         return format_filename(f"LootNannyLog_{dt_to_ts(self.time_start)}.json")
 
     def save_to_disk(self):
+        """
+        Saves data to disk by opening a file with the given filename and writing the serialized run data in JSON format.
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         with open(self.filename, 'w') as f:
             f.write(json.dumps(self.serialize_run()))
 
     @property
     def duration(self):
+        """
+        Calculates the duration of an event.
+
+        :return: The duration of the event in hours:minutes:seconds format.
+        """
         d = self.time_end - self.time_start if self.time_end else datetime.now() - self.time_start
         return "{}:{}:{}".format(d.hours, d.seconds // 60, d.seconds % 60)
 
     def add_skillgain_row(self, row: SkillRow):
+        """
+        Adds a skill gain row to the skillgains and skillprocs dictionaries.
+        
+        Args:
+            row (SkillRow): The skill row to be added.
+        
+        Returns:
+            None
+        """
         self.skillgains[row.skill] += row.amount
         self.skillprocs[row.skill] += 1
 
     def add_enhancer_break_row(self, row: EnhancerBreakages):
+        """
+        Increment the count of the given EnhancerBreakages type in the enhancer_breaks dictionary.
+
+        Parameters:
+            row (EnhancerBreakages): An instance of the EnhancerBreakages class representing the row to be added.
+
+        Returns:
+            None
+        """
         self.enhancer_breaks[row.type] += 1
 
     @property
     def total_enhancer_breaks(self):
+        """
+        Returns the total number of enhancer breaks.
+
+        :return: The total number of enhancer breaks.
+        :rtype: int
+        """
         return sum(self.enhancer_breaks.values())
 
     def add_global_row(self, row: GlobalInstance):
+        """
+        Adds a global row to the instance.
+
+        Parameters:
+            row (GlobalInstance): The global row to be added.
+
+        Returns:
+            None
+        """
         if row.hof:
             self.hofs += 1
             return
         self.globals += 1
 
     def add_combat_chat_row(self, row: CombatRow):
+        """
+        Increment the statistics for combat chat rows.
+
+        Args:
+            row (CombatRow): The combat row to be added.
+
+        Returns:
+            None
+        """
         self.total_attacks += 1
         self.total_damage += row.amount
         if row.critical:
@@ -242,6 +359,18 @@ class HuntingTrip(object):
         self.total_cost += self.cost_per_shot
 
     def add_loot_instance_chat_row(self, row: LootInstance):
+        """
+        Add a loot instance chat row to the loot tracking system.
+
+        Args:
+            row (LootInstance): The loot instance to be added.
+        
+        Returns:
+            None
+
+        Raises:
+            None
+        """
         ts = time.mktime(row.time.timetuple()) // 2
 
         # We dont want to consider sharp conversion as a loot event
@@ -276,18 +405,36 @@ class HuntingTrip(object):
 
     @property
     def miss_chance(self):
+        """
+        Calculate the miss chance of the player based on the total number of attacks and misses.
+
+        Returns:
+            str: The miss chance as a percentage, formatted with two decimal places.
+        """
         if self.total_attacks == 0:
             return "0.00%"
         return "%.2f" % (self.total_misses / float(self.total_attacks) * 100) + "%"
 
     @property
     def crit_chance(self):
+        """
+        Calculate the critical chance for the player.
+
+        Returns:
+            str: The critical chance as a percentage (e.g. "0.00%").
+        """
         if self.total_attacks == 0:
             return "0.00%"
         return "%.2f" % (self.total_crits / float(self.total_attacks) * 100) + "%"
 
     @property
     def dpp(self):
+        """
+        Calculates the damage per cost ratio.
+
+        Returns:
+            Decimal: The damage per cost ratio.
+        """
         if self.total_cost > Decimal(0):
             return Decimal(self.total_damage) / (Decimal(self.total_cost + self.extra_spend) * 100)
         return Decimal(0.0)
@@ -332,6 +479,12 @@ class HuntingTrip(object):
 
     @property
     def total_return_mu(self):
+        """
+        Calculates the total return in markup units (mu) for the current instance.
+
+        Returns:
+            Decimal: The total return in markup units (mu) for the current instance.
+        """
         total_return_mu = Decimal("0.0")
         if len(self.looted_items) == 0:
             total_return_mu = self.cached_total_return_mu
@@ -345,6 +498,12 @@ class HuntingTrip(object):
 
     @property
     def total_return_mu_perc(self):
+        """
+        Calculate the percentage of the total return on investment (ROI) in terms of monetary units (MU).
+
+        Returns:
+            float: The percentage of the total return on investment (ROI) in terms of monetary units (MU).
+        """
         if self.total_cost + self.extra_spend:
             return self.total_return_mu / (self.total_cost + self.extra_spend) * 100
         else:
@@ -383,11 +542,33 @@ class CombatModule(BaseModule):
         self.return_graph = None
 
     def update_active_run_cost(self):
+        """
+        Update the cost per shot for the active run.
+
+        This function calculates the cost per shot for the active run based on the ammo burn and decay values.
+        If there is an active run, it calculates the cost using the formula:
+        cost = Decimal(self.ammo_burn) / Decimal(10000) + self.decay
+
+        Parameters:
+            None
+
+        Returns:
+            None
+        """
         if self.active_run:
             cost = Decimal(self.ammo_burn) / Decimal(10000) + self.decay
             self.active_run.cost_per_shot = cost
 
     def tick(self, lines: List[BaseChatRow]):
+        """
+        Processes a list of chat lines and updates the internal state of the application.
+
+        Parameters:
+            lines (List[BaseChatRow]): The list of chat lines to process.
+
+        Returns:
+            None
+        """
         if self.is_logging and not self.is_paused:
 
             if self.active_run is None:
@@ -422,6 +603,18 @@ class CombatModule(BaseModule):
             self.should_redraw_runs = False
 
     def update_tables(self):
+        """
+        Updates the various tables used in the game.
+
+        This function calls multiple update functions to update the loot table,
+        combat table, skill table, enhancer table, and graphs.
+
+        Parameters:
+            self (object): The instance of the class.
+
+        Returns:
+            None
+        """
         self.update_loot_table()
         self.update_combat_table()
         self.update_skill_table()
@@ -476,9 +669,30 @@ class CombatModule(BaseModule):
         self.update_runs_table()
 
     def update_runs_table(self):
+        """
+        Update the runs table with the latest data.
+
+        This function retrieves the runs data using the `get_runs_data()` method and
+        sets it to the `runs_table` using the `setData()` method.
+
+        Parameters:
+            self (object): The instance of the current class.
+
+        Returns:
+            None
+        """
         self.runs_table.setData(self.get_runs_data())
 
     def update_skill_table(self):
+        """
+        Updates the skill table with the data from the active run.
+
+        Parameters:
+            self (object): The instance of the class.
+        
+        Returns:
+            None
+        """
         if not self.active_run:
             return
         self.skill_table.clear()
@@ -486,12 +700,37 @@ class CombatModule(BaseModule):
         self.app.total_skills_text.setText(f"{self.active_run.get_total_skill_gain():.4f}")
 
     def update_enhancer_table(self):
+        """
+        Updates the enhancer table with the data from the active run.
+
+        This function clears the enhancer table and then sets the data using the
+        `get_enhancer_table_data` method of the active run object.
+
+        Parameters:
+            self (object): The instance of the class.
+
+        Returns:
+            None
+        """
         if not self.active_run:
             return
         self.enhancer_table.clear()
         self.enhancer_table.setData(self.active_run.get_enhancer_table_data())
 
     def update_graphs(self):
+        """
+        Update the graphs displayed on the GUI.
+
+        This function is responsible for updating the return graph and the multiplier graph
+        with the data from the active run. If there is no active run, the graphs will not be
+        updated.
+
+        Parameters:
+        - None
+
+        Returns:
+        - None
+        """
         if not self.active_run:
             return
         self.return_graph.clear()
@@ -500,6 +739,21 @@ class CombatModule(BaseModule):
         self.multiplier_graph.plot(*self.active_run.multipliers, pen=None, symbol="o")
 
     def get_runs_data(self):
+        """
+        Retrieves data from the runs and organizes it into a dictionary.
+
+        Returns:
+            dict: A dictionary containing the following keys:
+                - "Notes": A list of notes for each run.
+                - "Start": A list of start times for each run.
+                - "End": A list of end times for each run.
+                - "Spend": A list of total costs for each run.
+                - "Enhancers": A list of total enhancer breaks for each run.
+                - "Extra Spend": A list of extra spend amounts for each run.
+                - "Return": A list of returns for each run.
+                - "%": A list of return percentages for each run.
+                - "mu%": A list of total return mu percentages for each run.
+        """
         d = {"Notes": [], "Start": [], "End": [], "Spend": [],
              "Enhancers": [], "Extra Spend": [], "Return": [], "%": [], "mu%": []}
         for run in self.runs[::-1]:
@@ -520,10 +774,33 @@ class CombatModule(BaseModule):
         return d
 
     def create_new_run(self):
+        """
+        Create a new run for the hunting trip.
+
+        This function initializes a new `HuntingTrip` object and assigns it to the `active_run`
+        attribute. The `HuntingTrip` object is created with the current date and time obtained
+        from `datetime.now()`, and the calculated value of ammo burn divided by 10000 plus the
+        decay value.
+
+        Parameters:
+            self (HuntingTrip): The instance of the `HuntingTrip` class.
+
+        Returns:
+            None
+        """
         self.active_run = HuntingTrip(datetime.now(), Decimal(self.ammo_burn) / Decimal(10000) + self.decay)
         self.runs.append(self.active_run)
 
     def save_active_run(self, force=False):
+        """
+        Save the active run to disk.
+
+        Parameters:
+            force (bool): Whether to save the active run even if it is None. Defaults to False.
+
+        Returns:
+            None
+        """
         if not self.active_run:
             if not force:
                 return
@@ -533,6 +810,17 @@ class CombatModule(BaseModule):
             self.active_run.save_to_disk()
 
     def load_runs(self):
+        """
+        Load runs from the specified directory and populate the `runs` list with the loaded data.
+
+        This function performs the following steps:
+        1. If the `RUNS_FILE` exists, migrate the runs to the new system and remove the old file.
+        2. If the `RUNS_DIRECTORY` exists, load each file in the directory and add the valid ones to the `run_files` list.
+        3. For each file in the `run_files` list, load the run data using the `HuntingTrip.load_from_filename()` method and append it to the `runs` list.
+        4. If the `runs` list is not empty, set the `active_run` to the last run if it is still ongoing, otherwise update the runs table.
+
+        This function does not take any parameters and does not return any values.
+        """
         if os.path.exists(RUNS_FILE):
             # Old system of saving runs, need to migrate
             migrate_runs()
@@ -567,6 +855,19 @@ class CombatModule(BaseModule):
 
 
 def migrate_runs():
+    """
+    Migrates the runs data from a file to the disk.
+
+    This function reads the runs data from the specified file and migrates it to the disk. The runs data is stored in a JSON format. The function first opens the file in read mode and attempts to read the contents. If an error occurs during the reading process, it prints a message indicating that a corrupted runs file has been detected, and it prints the raw data that was read. After reading the data, it attempts to parse the JSON and store it in the `data` variable. If the parsing fails, an empty dictionary is assigned to `data`.
+
+    After reading and parsing the data, the function iterates over each `run_data` in `data`. For each `run_data`, it deserializes the data using the `HuntingTrip.from_serialized` method and assigns the result to the `run` variable. Finally, it saves the `run` to the disk using the `run.save_to_disk()` method.
+
+    Parameters:
+    - None
+
+    Returns:
+    - None
+    """
     with open(RUNS_FILE, 'r') as f:
         try:
             raw_data = f.read()

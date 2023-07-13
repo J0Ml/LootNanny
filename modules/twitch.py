@@ -14,6 +14,12 @@ class Commands(str, Enum):
 
 
 def format_info():
+    """
+    A function that returns the formatted information about the LootNanny program.
+
+    Returns:
+        str: The formatted information about the LootNanny program.
+    """
     return """
     LootNanny is a LootTracker program created by Nanashana Nana Itsanai
     Download it at: https://github.com/euloggeradmin/LootNanny/releases
@@ -21,12 +27,30 @@ def format_info():
 
 
 def format_commands(commands):
+    """
+    Formats the list of commands into a string.
+
+    Args:
+        commands (list): A list of Command objects representing the available commands.
+
+    Returns:
+        str: A string containing the available commands, separated by commas.
+    """
     return f"""
     Available commands: {', '.join([str(c.value) for c in commands])}
     """
 
 
 def format_top_loots(combat_module: CombatModule):
+    """
+    Formats the top loots from a given CombatModule.
+
+    Parameters:
+    - combat_module (CombatModule): The CombatModule containing the loots.
+
+    Returns:
+    - str: A formatted string representing the top 5 loots, separated by ' --- '.
+    """
     all_mulitis = []
     for run in combat_module.runs:
         for multi in run.multipliers[1]:
@@ -39,6 +63,16 @@ def format_top_loots(combat_module: CombatModule):
 
 
 def format_all_returns(combat_module: CombatModule):
+    """
+    Calculates the total spend, total returns, and total percentage for a given combat module.
+
+    Args:
+        combat_module (CombatModule): The combat module for which to calculate the totals.
+
+    Returns:
+        str: A formatted string containing the total spend, total returns, and total percentage.
+
+    """ 
     all_spend = Decimal(0)
     all_return = Decimal(0)
 
@@ -87,11 +121,31 @@ class TwitchIntegration(commands.Bot):
             self.exited = True
 
     async def event_ready(self):
+        """
+        A function that is called when the event "ready" is triggered.
+
+        This function is responsible for handling the event when the bot is logged in and ready to chat and use commands.
+
+        Parameters:
+            self (class): An instance of the class.
+
+        Returns:
+            None
+        """
         # We are logged in and ready to chat and use commands...
         print(f'Logged in as | {self.username}')
 
     @commands.command()
     async def lootnanny(self, ctx: commands.Context):
+        """
+        A command that sends a message back to the channel.
+
+        Parameters:
+        - ctx (commands.Context): The context of the command.
+
+        Returns:
+        - None
+        """
         # Here we have a command hello, we can invoke our command with our prefix and command name
         # e.g ?hello
         # We can also give our commands aliases (different names) to invoke with.
@@ -119,4 +173,7 @@ class TwitchIntegration(commands.Bot):
         await ctx.send(msg)
 
     def start(self):
+        """
+        Starts the execution of the program by calling the `run` method.
+        """
         self.run()

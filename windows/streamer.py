@@ -50,6 +50,19 @@ class StreamerWindow(QWidget):
         self.show()
 
     def resize_to_contents(self):
+         """
+         Resizes the widget to fit its contents.
+
+         This function sets the size of the widget to match the size hint provided by its layout.
+         The layout calculates the ideal size for the widget based on its children and other factors.
+         After calling this function, the widget will have a fixed size that fits its contents.
+
+         Parameters:
+            None
+
+         Returns:
+            None
+         """
          self.setFixedSize(self.layout.sizeHint())
 
     def create_widgets(self):
@@ -97,6 +110,15 @@ class StreamerWindow(QWidget):
         return layout
 
     def set_text_from_module(self, combat_module: "CombatModule"):
+        """
+        Sets the text of the object from a given CombatModule.
+
+        Args:
+            combat_module (CombatModule): The CombatModule object from which to retrieve the data.
+
+        Returns:
+            None
+        """
         self.set_text_from_data(
             combat_module.active_run.loot_instances,
             combat_module.active_run.total_cost + combat_module.active_run.extra_spend,
@@ -110,6 +132,23 @@ class StreamerWindow(QWidget):
         )
 
     def set_text_from_data(self, loots, cost, returns, hofs, globals, dpp, total_returns, total_return_mu_perc, profit):
+        """
+        Sets the text of multiple widgets based on the given data.
+
+        Parameters:
+        - loots (int): The number of loots.
+        - cost (float): The cost.
+        - returns (float): The returns.
+        - hofs (int): The number of hofs.
+        - globals (int): The number of globals.
+        - dpp (float): The DPP (decimal per ped).
+        - total_returns (float): The total returns.
+        - total_return_mu_perc (float): The total return MU percentage.
+        - profit (float): The profit.
+
+        Returns:
+        None
+        """
         data = {
             LayoutValue.DPP: f"{dpp:.4f}",
             LayoutValue.GLOBALS: f"{globals:,}",
@@ -133,19 +172,55 @@ class StreamerWindow(QWidget):
                 widget.setText(format_str.format(data[data_type]))
 
     def center(self):
+        """
+        Centers the window on the screen.
+
+        Parameters:
+            None
+
+        Return:
+            None
+        """
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
     def mousePressEvent(self, event):
+        """
+        Handle the mouse press event.
+
+        Parameters:
+            event (QMouseEvent): The mouse event object.
+
+        Returns:
+            None
+        """
         self.oldPos = event.globalPos()
 
     def mouseMoveEvent(self, event):
+        """
+        Moves the widget to a new position based on the mouse movement.
+
+        Parameters:
+            event (QMouseEvent): The mouse move event.
+
+        Returns:
+            None
+        """
         delta = QPoint (event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
 
     def closeEvent(self, event):
+        """
+        Closes the event.
+
+        Args:
+            event: The event object.
+
+        Returns:
+            None
+        """
         self.app.streamer_window = None
         event.accept()  # let the window close

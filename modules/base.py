@@ -7,4 +7,13 @@ class BaseModule(object):
         pass
 
     def tick(self, lines: List[Any]):
+        """
+        A function that performs a tick operation.
+
+        Args:
+            lines (List[Any]): The list of lines.
+
+        Returns:
+            None
+        """
         pass
